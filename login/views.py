@@ -1,6 +1,27 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate,logout
-from .forms import PersonCreationForm, LoginForm
+from .forms import PersonCreationForm, LoginForm,PatientCreationForm,DoctorCreationForm
+
+def register_doctor(request):
+    if request.method == 'POST':
+        form = DoctorCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  
+    else:
+        form = DoctorCreationForm()
+    return render(request, 'register_doctor.html', {'form': form})
+
+
+def register_patient(request):
+    if request.method == 'POST':
+        form = PatientCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  
+    else:
+        form = PatientCreationForm()
+    return render(request, 'register_patient.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
