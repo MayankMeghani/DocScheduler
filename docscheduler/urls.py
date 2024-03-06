@@ -19,8 +19,6 @@ from django.urls import path,include
 from docscheduler import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', views.homePage),
-        path('', include('login.urls')),  # Include the app's URLs
-
+    path('', include('login.urls')),  # Include the app's URLs
 
 ]

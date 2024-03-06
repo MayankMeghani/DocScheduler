@@ -7,7 +7,7 @@ def register_doctor(request):
         form = DoctorCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')  
+            return redirect('/login')  
     else:
         form = DoctorCreationForm()
     return render(request, 'register_doctor.html', {'form': form})
@@ -18,7 +18,7 @@ def register_patient(request):
         form = PatientCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')  
+            return redirect('/login')  
     else:
         form = PatientCreationForm()
     return render(request, 'register_patient.html', {'form': form})
@@ -29,7 +29,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')  # Redirect to the home page or another page after successful registration
+            return redirect('/')  
     else:
         form = PersonCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -43,10 +43,13 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Redirect to the home page or another page after successful login
+                if(user.is_staff==True):
+                    return redirect('/home_doctor')
+                else:
+                    return redirect('/home_patient') 
             else:
-                # Handle invalid login
-                pass
+                return render(request, 'login.html', {'form': form})
+    
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
@@ -54,6 +57,12 @@ def user_login(request):
 def home(request):
     return render(request, 'home.html')
 
+def home_doctor(request):
+    return render(request, 'home_doctor.html')
+
+def home_patient(request):
+    return render(request, 'home_patient.html')
+
 def logout_request(request):
     logout(request)
-    return redirect('home')
+    return redirect('/')
