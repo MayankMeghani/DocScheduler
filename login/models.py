@@ -3,6 +3,9 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class Person(AbstractUser):
+    profile_picture = models.ImageField(upload_to='profile_pictures/')
+    name =models.CharField(max_length=30)
+    age = models.PositiveIntegerField() 
     address = models.CharField(max_length=255)
     mobile_number = models.CharField(max_length=15)
     GENDERS = [
@@ -29,6 +32,7 @@ class Patient(Person):
         db_table ='patient'
 
 class Doctor(Person):
+    experience = models.PositiveIntegerField() 
     specialization = models.CharField(max_length=30)
     rating = models.IntegerField(blank=True, null=True)
     class Meta:

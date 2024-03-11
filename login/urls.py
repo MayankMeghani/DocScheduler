@@ -10,4 +10,5 @@ urlpatterns = [
     path('home_doctor', views.home_doctor, name='home/doctor'),
     path('home_patient/', views.home_patient, name='home/patient'),
     path("logout/", views.logout_request, name="logout"),
+
 ]

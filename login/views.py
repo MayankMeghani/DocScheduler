@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate,logout
 from .forms import PersonCreationForm, LoginForm,PatientCreationForm,DoctorCreationForm
+from .models import Doctor
+from django.core.exceptions import ValidationError
 
 def register_doctor(request):
     if request.method == 'POST':
-        form = DoctorCreationForm(request.POST)
+        form = DoctorCreationForm(request.POST, request.FILES)
         if form.is_valid():
+            age = form.cleaned_data['age']
+            experience = form.cleaned_data['experience']
+            if experience > age:
+                raise ValidationError("Experience cannot be greater than age.")
             form.save()
             return redirect('/login')  
     else:
@@ -15,7 +21,7 @@ def register_doctor(request):
 
 def register_patient(request):
     if request.method == 'POST':
-        form = PatientCreationForm(request.POST)
+        form = PatientCreationForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             return redirect('/login')  
@@ -25,7 +31,7 @@ def register_patient(request):
 
 def register(request):
     if request.method == 'POST':
-        form = PersonCreationForm(request.POST)
+        form = PersonCreationForm(request.POST,request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)
@@ -43,6 +49,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                request.session['username'] = user.username
                 if(user.is_staff==True):
                     return redirect('/home_doctor')
                 else:
@@ -65,4 +72,8 @@ def home_patient(request):
 
 def logout_request(request):
     logout(request)
+    if 'username' in request.session:
+        del request.session['username']  # Clear username from session upon logout
     return redirect('/')
+
+

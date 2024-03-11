@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,84 +7,11 @@
     <title>Your Medical Website</title>
     <!-- Bootstrap CSS -->
     <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
     />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-      }
-
-      header {
-        background-color: #333;
-        color: #fff;
-        padding: 10px;
-        text-align: center;
-      }
-
-      section {
-        padding: 20px;
-        text-align: center;
-      }
-
-      .maincon {
-        display: flex;
-      }
-
-      #doctor {
-        background-color: rgb(171, 222, 224);
-        padding: 2%;
-        flex: 1;
-        /* Distribute space equally among sections */
-        margin-left: 25%;
-        margin-top: 5%;
-        margin-right: 0.5%;
-
-        hheight: 20rem;
-        /* Add some margin between sections */
-      }
-      #pateint {
-        background-color: rgb(171, 222, 224);
-        padding: 2%;
-        flex: 1;
-        /* Distribute space equally among sections */
-        margin-right: 25%;
-        margin-left: 0.5%;
-        margin-top: 5%;
-        height: 20rem;
-        /* Add some margin between sections */
-      }
-      @media (max-width: 600px) {
-        .maincon {
-          flex-direction: column;
-          /* Change to column layout */
-        }
-      }
-
-      footer {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 10px;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-      }
-
-      .city-dropdown {
-        margin-right: auto;
-      }
-
-      /* Extend the width of the container */
-      .navbar .container {
-        max-width: 100%; /* Adjust the width as needed */
-      }
-
-      /* Dummy buttons */
-      .navbar .dummy-buttons {
-        margin-left: auto;
-      }
-    </style>
+    <link
+    rel="stylesheet" href="{% static 'style.css' %}"
+    />
   </head>
 
   <body>

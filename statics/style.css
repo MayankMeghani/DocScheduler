@@ -1,0 +1,119 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+section {
+  padding: 20px;
+  text-align: center;
+}
+
+.maincon {
+  display: flex;
+}
+
+#doctor {
+  background-color: rgb(171, 222, 224);
+  padding: 2%;
+  flex: 1;
+  /* Distribute space equally among sections */
+  margin-left: 25%;
+  margin-top: 5%;
+  margin-right: 0.5%;
+
+  height: 20rem;
+  /* Add some margin between sections */
+}
+#pateint {
+  background-color: rgb(171, 222, 224);
+  padding: 2%;
+  flex: 1;
+  /* Distribute space equally among sections */
+  margin-right: 25%;
+  margin-left: 0.5%;
+  margin-top: 5%;
+  height: 20rem;
+  /* Add some margin between sections */
+}
+@media (max-width: 600px) {
+  .maincon {
+    flex-direction: column;
+    /* Change to column layout */
+  }
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.city-dropdown {
+  margin-right: auto;
+}
+
+/* Extend the width of the container */
+.navbar .container {
+  max-width: 100%; /* Adjust the width as needed */
+}
+
+/* Dummy buttons */
+.navbar .dummy-buttons {
+  margin-left: auto;
+}
+.maincon>section {
+  background-color: rgb(171, 222, 224);
+  padding: 2%;
+  flex: 1;
+  /* Distribute space equally among sections */
+  margin: 1%;
+  /* Add some margin between sections */
+}
+
+
+.container {
+  margin-top: 20px;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+.card-body {
+  flex: 1;
+  padding: 20px;
+  text-align: left;
+}
+
+#search-bar {
+  margin-bottom: 20px;
+}
+
+
+.card-horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-horizontal .card-img-top {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px 0 0 5px;
+}
+
+.card-horizontal .card-body {
+  flex: 1;
+  padding: 20px;
+  text-align: left;
+}
