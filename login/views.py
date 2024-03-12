@@ -50,7 +50,9 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 request.session['username'] = user.username
+                request.session['is_staff'] = False
                 if(user.is_staff==True):
+                    request.session['is_staff'] = True
                     return redirect('/home_doctor')
                 else:
                     return redirect('/home_patient') 

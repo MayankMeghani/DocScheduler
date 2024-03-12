@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('time_slot', models.TimeField()),
-                ('date', models.DateField(validators=[appointment.models.validate_future_date])),
+                ('date', models.DateField()),
                 ('status', models.CharField(choices=[('Cancelled', 'Cancelled'), ('Confirmed', 'Confirmed'), ('Pending', 'Pending')], default='Pending', max_length=200)),
                 ('doctor_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='login.doctor')),
                 ('patient_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='login.patient')),

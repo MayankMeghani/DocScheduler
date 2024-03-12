@@ -1,14 +1,10 @@
 from django.db import models
-
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from login.models import Patient, Doctor
-
-
-def validate_future_date(value):
-    if value < timezone.now().date():
-        raise ValidationError("Appointment date cannot be in the past.")
+import datetime
+ 
 
 
 class Appointment(models.Model):
@@ -20,8 +16,13 @@ class Appointment(models.Model):
         ('evening' ,'evening'),
     ]
     time_slot = models.CharField(max_length=20,choices=TIME_SLOTS)
-    # date = models.DateField(validators=[validate_future_date])
-    date=models.CharField(max_length=20)
+    next_7_days = [
+        datetime.date.today() + datetime.timedelta(days=i+1) for i in range(7) ]
+
+    DATE_CHOICES = tuple([(d, d.strftime('%d-%m-%Y')) for d in next_7_days])
+
+    date = models.DateField(max_length=20, choices=DATE_CHOICES)
+
     STATUS_CHOICES = [
         ('Cancelled', 'Cancelled'),
         ('Confirmed', 'Confirmed'),
