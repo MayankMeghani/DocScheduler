@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Record</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+    <style>
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+    </style>
+</head>
+<body>
+{% include "navbar.html" %}
+  <h3>Appointments for {{ user.name }}</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Patient</th>
+        <th>Time Slot</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.patient_username }}</td>
+            <td>{{ appointment.time_slot }}</td>
+            <td>{{ appointment.date }}</td>
+            <td>
+                {{ appointment.get_status_display }}
+            </td>
+            <td>
+                <form method="post" action="{% url 'update_appointment_status' appointment.id %}">
+                    {% csrf_token %}
+                    <select name="status">
+                        {% for choice in appointment.get_STATUS_CHOICES %}
+                            <option value="{{ choice.0 }}" {% if appointment.status == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="5">No appointments found.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

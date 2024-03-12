@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from login.models import Patient, Doctor
 import datetime
- 
+today = datetime.date.today()
 
 
 class Appointment(models.Model):
@@ -16,11 +16,10 @@ class Appointment(models.Model):
         ('evening' ,'evening'),
     ]
     time_slot = models.CharField(max_length=20,choices=TIME_SLOTS)
-    next_7_days = [
-        datetime.date.today() + datetime.timedelta(days=i+1) for i in range(7) ]
 
-    DATE_CHOICES = tuple([(d, d.strftime('%d-%m-%Y')) for d in next_7_days])
-
+    past_7_days = [today - datetime.timedelta(days=i+1) for i in range(7)]
+    next_7_days = [today + datetime.timedelta(days=i+1) for i in range(7)]
+    DATE_CHOICES = tuple([(today, today.strftime('%d-%m-%Y'))] + [(d, d.strftime('%d-%m-%Y')) for d in past_7_days + next_7_days])
     date = models.DateField(max_length=20, choices=DATE_CHOICES)
 
     STATUS_CHOICES = [
@@ -32,3 +31,5 @@ class Appointment(models.Model):
     class Meta:
         db_table = 'Appointment'
     
+    def get_STATUS_CHOICES(self):
+        return self.STATUS_CHOICES

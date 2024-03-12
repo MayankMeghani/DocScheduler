@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate,logout
 from .forms import PersonCreationForm, LoginForm,PatientCreationForm,DoctorCreationForm
-from .models import Doctor
 from django.core.exceptions import ValidationError
-
+from datetime import datetime
+from appointment.models import Appointment
 def register_doctor(request):
     if request.method == 'POST':
         form = DoctorCreationForm(request.POST, request.FILES)
@@ -53,7 +53,13 @@ def user_login(request):
                 request.session['is_staff'] = False
                 if(user.is_staff==True):
                     request.session['is_staff'] = True
-                    return redirect('/home_doctor')
+                    today = datetime.now().date()
+                    appointments = Appointment.objects.filter(
+                    doctor_username__username=user.username,
+                    date=today,
+                    status="Confirmed"
+                    )
+                    return render(request, 'home_doctor.html',{'appointments': appointments})
                 else:
                     return redirect('/home_patient') 
             else:
@@ -67,7 +73,13 @@ def home(request):
     return render(request, 'home.html')
 
 def home_doctor(request):
-    return render(request, 'home_doctor.html')
+    today = datetime.now().date()
+    appointments = Appointment.objects.filter(
+        doctor_username__username=request.session.get('username'),
+        date=today,
+        status="Confirmed"
+    )
+    return render(request, 'home_doctor.html', {'appointments': appointments})
 
 def home_patient(request):
     return render(request, 'home_patient.html')

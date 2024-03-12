@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booked Appointments</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+    </style>
+</head>
+<body>
+    {% include "navbar.html" %}
+
+    <h1>Booked Appointments</h1>
+    {% if appointments %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time Slot</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.doctor_username }}</td>
+                        <td>{{ appointment.date }}</td>
+                        <td>{{ appointment.time_slot }}</td>
+                        <td>{{ appointment.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No appointments booked.</p>
+    {% endif %}
+</body>
+</html>

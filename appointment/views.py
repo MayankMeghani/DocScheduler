@@ -3,6 +3,7 @@ from django.shortcuts import render ,redirect
 from .models import Appointment
 from login.models import Doctor,Patient
 from .forms import AppointmentForm
+from datetime import datetime,timedelta
 
 def doctor_list(request):
     doctors = Doctor.objects.all()
@@ -28,3 +29,48 @@ def book_appointment(request):
             return redirect('/home_patient')
 
     return render(request, 'book_appointment.html', {'form': form})
+
+def appointment_list(request):
+    doctor_username = request.session.get('username')
+    tomorrow = datetime.now().date()+timedelta(days=1)
+    appointments = Appointment.objects.filter(doctor_username__username=doctor_username, date__gte=tomorrow)
+    return render(request, 'appointment_list.html', {'appointments': appointments})
+
+
+def update_appointment_status(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    if request.method == 'POST':
+        status = request.POST['status']
+        appointment.status = status
+        appointment.save()
+        return redirect('/appointment_list')
+
+
+def past_appointment_list(request):
+    doctor_username = request.session.get('username')
+    today = datetime.now().date()
+    
+    past_appointments = Appointment.objects.filter(
+        doctor_username__username=doctor_username,
+        date__lt=today
+    )
+    
+    today_appointments = Appointment.objects.filter(
+        doctor_username__username=doctor_username,
+        date=today,
+        status__in=['Pending', 'Cancelled'] 
+    )
+    
+    all_appointments = list(past_appointments) + list(today_appointments)
+    
+    return render(request, 'appointment_record.html', {'appointments': all_appointments})
+
+def booked_appointment_list(request):
+    current_username = request.session.get('username')
+    
+    current_user = Patient.objects.get(username=current_username)
+    
+    appointments = Appointment.objects.filter(patient_username=current_user)
+    
+    return render(request, 'booked_appointment.html', {'appointments': appointments})
+

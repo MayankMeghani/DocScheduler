@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Record</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+    <style>
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+    </style>
+</head>
+<body>
+    {% include "navbar.html" %}
+    <h3>Appointment Record</h3>
+    {% if appointments %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Date</th>
+                    <th>Time Slot</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.patient_username }}</td>
+                        <td>{{ appointment.date }}</td>
+                        <td>{{ appointment.time_slot }}</td>
+                        <td>{{ appointment.status }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">No past appointments found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No past appointments found.</p>
+    {% endif %}
+</body>
+</html>
