@@ -1,1 +1,33 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+</head>
+<body>
 {% include "navbar.html" %}
+{% if user.is_authenticated %}
+      <h2>Welcome, {{ user.name }}</h2>
+      <div class="container">
+            <div class="row">
+              {% for appointment in appointments %}
+              <div class="appointment-card">
+                <ul>
+                  <li><strong>Patient:</strong> {{ appointment.patient_username }}</li>
+                  <li><strong>Time Slot:</strong> {{ appointment.time_slot }}</li>
+                  <li><strong>Date:</strong> {{ appointment.date }} </li>
+                </ul>
+              </div>
+              {% empty %}
+              <p>No appointments found.</p>
+              {% endfor %}
+            </div>
+          </div>
+{% endif %}
+
+      </body>
+      </html>

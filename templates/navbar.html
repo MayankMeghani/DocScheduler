@@ -1,7 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +12,8 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        {% csrf_token %}
+        {% if not user.is_staff %}
         <div class="container">
             <div class="city-dropdown">
                 <span id="currentCity" style="color: #fff;">Current City: <span id="cityName">Loading...</span></span>
@@ -27,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <a class="navbar-brand" href="#" style="margin-left: 20px;">Home</a>
+            <a class="navbar-brand" href="/home_patient" style="margin-left: 20px;">Home</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -35,18 +34,52 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="doctor_list">Book appointment</a>
+                        <a class="nav-link" href="doctor_list">Book Appointment</a>                    
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="booked_appointment_list">Appointment record</a>                    
                     </li>
                 </ul>
             </div>
             <div class="dummy-buttons">
-                <!-- Dummy login/signup and user profile buttons -->
                 <a href="/logout">
                 <button class="btn btn-primary">Logout</button>
                 </a>
+                <a href="/profile">
                 <button class="btn btn-outline-light">Profile</button>
+                </a>
             </div>
         </div>
+        {% endif %}
+        
+        {% if user.is_staff %}
+        
+        <div class="container">
+            <a class="navbar-brand" href="/home_doctor" style="margin-left: 20px;">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/appointment_list">Upcoming Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/past_appointment_list">Appointment record</a>
+                    </li>    
+                </ul>
+            </div>
+            <div class="dummy-buttons">
+                <a href="/logout">
+                <button class="btn btn-primary">Logout</button>
+                </a>
+                <a href="/profile">
+                <button class="btn btn-outline-light">Profile</button>
+                </a>
+            </div>
+        </div>
+        {% endif %}
     </nav>
 </div>
 
@@ -82,5 +115,3 @@
         }
     </script>
 </body>
-
-</html>
