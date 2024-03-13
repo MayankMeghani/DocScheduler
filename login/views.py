@@ -4,6 +4,8 @@ from .forms import PersonCreationForm, LoginForm,PatientCreationForm,DoctorCreat
 from django.core.exceptions import ValidationError
 from datetime import datetime
 from appointment.models import Appointment
+
+from django.contrib.auth.decorators import login_required
 def register_doctor(request):
     if request.method == 'POST':
         form = DoctorCreationForm(request.POST, request.FILES)
@@ -80,6 +82,7 @@ def home_doctor(request):
         status="Confirmed"
     )
     return render(request, 'home_doctor.html', {'appointments': appointments})
+    # return redirect("home/doctor",**kwargs={'appointments': appointments})
 
 def home_patient(request):
     return render(request, 'home_patient.html')
@@ -90,4 +93,9 @@ def logout_request(request):
         del request.session['username']  # Clear username from session upon logout
     return redirect('/')
 
+
+@login_required
+def user_profile(request):
+    user = request.user
+    return render(request, 'user_profile.html', {'user': user})
 
