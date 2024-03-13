@@ -36,12 +36,13 @@ class Patient(Person):
     blood_group = models.CharField(max_length=3,choices=blood_group_choices)
     class Meta:
         db_table ='patient'
-    # def save(self, *args, **kwargs):
-    #     super(Patient, self).save(*args, **kwargs)  # Save the instance to the database first
-    #     if not self.pk:
-    #         # Set the group to "patient" for new Patient instances
-    #         group = Group.objects.get(name='patient')
-    #         self.groups.add(group)  
+    
+    def save(self, *args, **kwargs):
+        if not self.pk and not self.group_set.exists():
+            default_group = Group.objects.get(name='Patient')
+            self.group_set.add(default_group)
+
+        super().save(*args, **kwargs)
 
 class Doctor(Person):
     experience = models.PositiveIntegerField() 

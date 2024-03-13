@@ -1,9 +1,30 @@
-
+{% load static %}
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'forms.css' %}"/>
+    <style>
+      form {
+          margin-top:10%;
+          max-width: 30%;
+      }
+  </style>
+  </head>
+  <body>
 {% block content %}
-  <h2>Login</h2>
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+          <li>{{ message }}</li>
+      {% endfor %}
+  </ul>
+{% endif %}
+
   <form method="post">
+    <center><h1>Login</h1></center>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Login</button>
   </form>
 {% endblock %}
+</body>
+</html>

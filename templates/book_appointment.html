@@ -1,4 +1,18 @@
+{% load static%}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'forms.css' %}"/>
+        <style>
+            form {
+                margin-top:7%;
+                max-width: 30%;
+            }
+        </style>
+    </head>
+    <body>
 <form method="post">
+    <center><h1>Book Appointment</h1></center>
+
     {% csrf_token %}
     <p>
         <label for="id_doctor_username">Doctor Username:</label>
@@ -11,3 +25,5 @@
     {{ form.as_p }}
     <button type="submit">Submit</button>
 </form>
+</body>
+</html>

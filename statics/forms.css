@@ -1,0 +1,42 @@
+form {
+    max-width: 40%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Apply styles to form labels */
+  form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Apply styles to form inputs */
+  form input[type="text"],
+  form input[type="password"],
+  form select,
+  form textarea {
+    width: 92%;
+    padding: 10px;
+    /* margin-bottom: 20px; */
+    margin: 1%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Apply styles to form buttons */
+  form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Apply styles to form buttons on hover */
+  form button:hover {
+    background-color: #0056b3;
+  }

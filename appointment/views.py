@@ -4,12 +4,19 @@ from .models import Appointment
 from login.models import Doctor,Patient
 from .forms import AppointmentForm
 from datetime import datetime,timedelta
+from django.contrib import messages
 
 def doctor_list(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as patient first.')
+        return redirect('login')
     doctors = Doctor.objects.all()
     return render(request,'doctor_list.html',{'doctors': doctors})
 
 def book_appointment(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as patient first.')
+        return redirect('login')
     if request.method == 'GET':
         patient_username = request.session.get('username')
         doctor_username = request.GET.get('doctor_username')
@@ -31,6 +38,9 @@ def book_appointment(request):
     return render(request, 'book_appointment.html', {'form': form})
 
 def appointment_list(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as doctor first.')
+        return redirect('login')
     doctor_username = request.session.get('username')
     tomorrow = datetime.now().date()+timedelta(days=1)
     appointments = Appointment.objects.filter(doctor_username__username=doctor_username, date__gte=tomorrow)
@@ -38,6 +48,9 @@ def appointment_list(request):
 
 
 def update_appointment_status(request, appointment_id):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as doctor first.')
+        return redirect('login')
     appointment = Appointment.objects.get(id=appointment_id)
     if request.method == 'POST':
         status = request.POST['status']
@@ -47,6 +60,9 @@ def update_appointment_status(request, appointment_id):
 
 
 def past_appointment_list(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as doctor first.')
+        return redirect('login')
     doctor_username = request.session.get('username')
     today = datetime.now().date()
     
@@ -66,6 +82,9 @@ def past_appointment_list(request):
     return render(request, 'appointment_record.html', {'appointments': all_appointments})
 
 def booked_appointment_list(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as patient first.')
+        return redirect('login')
     current_username = request.session.get('username')
     
     current_user = Patient.objects.get(username=current_username)

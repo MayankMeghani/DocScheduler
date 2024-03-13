@@ -1,5 +1,8 @@
 body {
   font-family: Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
 }
 
 header {
@@ -30,6 +33,7 @@ section {
   height: 20rem;
   /* Add some margin between sections */
 }
+
 #pateint {
   background-color: rgb(171, 222, 224);
   padding: 2%;
@@ -41,6 +45,7 @@ section {
   height: 20rem;
   /* Add some margin between sections */
 }
+
 @media (max-width: 600px) {
   .maincon {
     flex-direction: column;
@@ -64,13 +69,15 @@ footer {
 
 /* Extend the width of the container */
 .navbar .container {
-  max-width: 100%; /* Adjust the width as needed */
+  max-width: 100%;
+  /* Adjust the width as needed */
 }
 
 /* Dummy buttons */
 .navbar .dummy-buttons {
   margin-left: auto;
 }
+
 .maincon>section {
   background-color: rgb(171, 222, 224);
   padding: 2%;
@@ -131,6 +138,7 @@ footer {
   width: 33%;
   margin: 1%;
 }
+
 .appointment-card-container .appointment-card {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
@@ -139,15 +147,50 @@ footer {
   width: 33%;
   margin: 1%;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
 }
-th, td {
+
+th,
+td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
+
 th {
   background-color: #f2f2f2;
+}
+
+/* profile page css */
+
+.profile_container {
+  max-width: 30%;
+  margin: 5rem auto ;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h1 {
+  color: #007bff;
+}
+
+img {
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile_container>p {
+  margin: 10px 0;
+}
+
+strong {
+  font-weight: bold;
 }
