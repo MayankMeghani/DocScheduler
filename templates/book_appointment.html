@@ -10,19 +10,22 @@
         </style>
     </head>
     <body>
-<form method="post">
+        
+<form method="post" action="processing_appointment">
     <center><h1>Book Appointment</h1></center>
 
     {% csrf_token %}
-    <p>
-        <label for="id_doctor_username">Doctor Username:</label>
-        <input type="text" name="doctor_username" id="id_doctor_username" value="{{ form.initial.doctor_username }}" placeholder="{{ form.initial.doctor_username }}" disabled>
-    </p>
-    <p>
-        <label for="id_patient_username">Patient Username:</label>
-        <input type="text" name="patient_username" id="id_patient_username" value="{{ form.initial.patient_username }}" placeholder="{{ form.initial.patient_username }}" disabled>
-    </p>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+    <input type="hidden" name="doctor_username" id="doctor_username" value="{{ form.initial.doctor_username }}" placeholder="{{ form.initial.doctor_username }}" >
+    <input type="hidden" name="patient_username" id="patient_username" value="{{ form.initial.patient_username }}" placeholder="{{ form.initial.patient_username }}" >
     {{ form.as_p }}
+    
     <button type="submit">Submit</button>
 </form>
 </body>

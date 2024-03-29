@@ -13,7 +13,9 @@ def register_doctor(request):
             age = form.cleaned_data['age']
             experience = form.cleaned_data['experience']
             if experience > age:
-                raise ValidationError("Experience cannot be greater than age.")
+                messages.error(request, "Experience cannot be greater than age.")
+                form = DoctorCreationForm()
+                return render(request, 'register_doctor.html', {'form': form})
             form.save()
             return redirect('/login')  
     else:
@@ -30,6 +32,8 @@ def register_patient(request):
             messages.success(request, "Registration successful." )
             return redirect('/login')
         messages.error(request, "Unsuccessful registration. Invalid information.")
+        form = PatientCreationForm()
+        return render(request, 'register_patient.html', {'form': form})
     else:
         form = PatientCreationForm()
     return render(request, 'register_patient.html', {'form': form})
@@ -72,13 +76,6 @@ def user_login(request):
     
     else:
         form = LoginForm()
-        # Determine the cause of authentication failure and set appropriate error message
-        # if not User.objects.filter(username=username).exists():
-        #     messages.error(request, 'User does not exist.')
-        # elif not User.objects.filter(username=username, is_active=True).exists():
-        #     messages.error(request, 'User account is inactive.')
-        # else:
-        #     messages.error(request, 'Incorrect password.')
     return render(request, 'login.html', {'form': form})
 
 def home(request):

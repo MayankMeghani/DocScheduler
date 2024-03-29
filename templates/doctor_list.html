@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +11,12 @@
     <link rel="stylesheet" href="{% static 'style.css' %}"/>
 </head>
 
+
 <body>
     {% include "navbar.html" %}
     <div class="container">
         <input type="text" class="form-control" id="search-bar" placeholder="Search by name or specialty">
+
 
         <!-- Sort dropdown -->
         <div class="form-group">
@@ -24,18 +27,18 @@
                 <!-- Add more sorting options as needed -->
             </select>
         </div>
-        
+       
     <div id="doctor-list">
         {% for doctor in doctors %}
             <div class="card card-horizontal">
                 <img src="{{ doctor.profile_picture.url }}" class="card-img-top" alt="Doctor Image">
                 <div class="card-body">
-                    <h5 class="card-title">{{ doctor.name }}</h5>
+                    <h5 class="card-title" id="name">{{ doctor.name }}</h5>
                     <p class="card-text">Age: {{ doctor.age }}</p>
                     <p class="card-text">Address: {{ doctor.address }}</p>
-                    <p class="card-text">Experience: {{ doctor.experience }} years</p>
-                    <p class="card-text">Specialty: {{ doctor.specialization }}</p>
-                    <form method="get" action="book_appointment">
+                    <p class="card-text" id="experience">Experience: {{ doctor.experience }} years</p>
+                    <p class="card-text" id="specialty">Specialty: {{ doctor.specialization }}</p>
+                    <form method="post" action="book_appointment">
                         {% csrf_token %}
                         <input type="hidden" name="patient_username" value="{{ request.session.username }}">
                         <input type="hidden"  name="doctor_username" value="{{ doctor.username }}">
@@ -50,11 +53,67 @@
 </div>
     </div>
 
+
     <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        // Function to filter doctors based on search input
+        document.getElementById('search-bar').addEventListener('input', function () {
+            var searchText = this.value.toLowerCase();
+            var cards = document.querySelectorAll('#doctor-list .card');
 
+
+            cards.forEach(function (card) {
+                var doctorName = card.querySelector('.card-title').textContent.toLowerCase();
+                var specialty = card.querySelector('#specialty').textContent.toLowerCase();
+                if (doctorName.includes(searchText) || specialty.includes(searchText)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+
+        // Function to sort doctors based on the selected option in the dropdown
+        document.getElementById('sort-dropdown').addEventListener('change', function () {
+            var sortBy = this.value;
+            console.log(sortBy);
+            var doctorList = document.getElementById('doctor-list');
+            console.log(doctorList)
+            var doctors = Array.from(doctorList.children);
+            console.log(doctors)
+
+
+
+
+            doctors.sort(function (a, b) {
+                var aValue = a.querySelector('#' + sortBy).textContent.trim();
+                var bValue = b.querySelector('#' + sortBy).textContent.trim();
+
+
+                return aValue.localeCompare(bValue);
+            });
+            console.log(doctors)
+            doctors.forEach(function (doctor) {
+                doctorList.appendChild(doctor);
+            });
+        });
+
+
+        // Function to get the sorting value from a card element based on the selected sorting option
+        function getSortingValue(card, sortBy) {
+            var sortingElement = card.querySelector('.' + sortBy);
+            return sortingElement ? sortingElement.textContent.trim().toLowerCase() : '';
+        }
+    </script>
 </body>
 
+
 </html>
+
+

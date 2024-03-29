@@ -7,12 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Dashboard</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}"/>
-</head>
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>  
+  <style>
+    body {
+        background-image: url("{% static 'bg_doctor.jpg' %}") ;
+        background-size: 1535px 700px;
+  }
+  .welcome-container {
+    color: black; /* Text color */
+    padding: 20px;
+    text-align: center; /* Center align the text */
+
+  }
+</style>
+  </head>
 <body>
 {% include "navbar.html" %}
 {% if user.is_authenticated %}
-      <h2>Welcome, {{ user.name }}</h2>
+
+<div class="welcome-container">
+  <h2>Welcome, Dr.{{ user.name }}</h2>
+</div>
       <div class="container">
             <div class="row">
               {% for appointment in appointments %}

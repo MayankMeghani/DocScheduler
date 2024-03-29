@@ -12,9 +12,14 @@
     <link
     rel="stylesheet" href="{% static 'style.css' %}"
     />
+    <style>
+      body {
+          background-image: url("{% static 'bg.png' %}");
+      }
+  </style>
   </head>
 
-  <body>
+  <body >
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       
         <a class="navbar-brand" href="#" style="margin-left: 20px">Home</a>
@@ -49,14 +54,14 @@
     <div class="maincon">
       <section id="doctor">
         <br><br><br>
-        <a>Click here to </a>
-        <a href="/register_doctor"><h2>Register Doctor</h2></a>
+        <a style="color: blue;">Click here to </a>
+        <a href="/register_doctor"  style="color: black;"><h2>Register Doctor</h2></a>
         </section>
 
       <section id="pateint">
         <br><br><br>
-        <a>Click here to </a>
-        <a href="/register_patient"><h2>Register Pateint</h2></a>
+        <a style="color: blue;">Click here to </a>
+        <a href="/register_patient" style="color: black;"><h2>Register Pateint</h2></a>
         <p></p>
       </section>
     </div>

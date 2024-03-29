@@ -10,21 +10,27 @@
   </style>
   </head>
   <body>
-{% block content %}
-  {% if messages %}
-  <ul class="messages">
-      {% for message in messages %}
-          <li>{{ message }}</li>
-      {% endfor %}
-  </ul>
-{% endif %}
 
   <form method="post">
     <center><h1>Login</h1></center>
     {% csrf_token %}
+    {% block content %}
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+              <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
+    <div style="text-align: center;">
+      <button type="submit">Login</button>
+      <a href="/" style="display: inline-block; margin-left: 10px;">
+          <button type="button">Home</button>
+      </a>
+  </div>
   </form>
+
 {% endblock %}
 </body>
 </html>

@@ -12,8 +12,20 @@
 <form method="post" enctype="multipart/form-data">
     <center><h1>Register Doctor</h1></center>
     {% csrf_token %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
     {{ form.as_p }}
-    <button type="submit">Register</button>
+<div style="text-align: center;">
+      <button type="submit">Register</button>
+      <a href="/" style="display: inline-block; margin-left: 10px;">
+          <button type="button">Home</button>
+      </a>
+  </div>
   </form>
 {% endblock %}
 

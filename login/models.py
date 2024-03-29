@@ -37,12 +37,6 @@ class Patient(Person):
     class Meta:
         db_table ='patient'
     
-    def save(self, *args, **kwargs):
-        if not self.pk and not self.group_set.exists():
-            default_group = Group.objects.get(name='Patient')
-            self.group_set.add(default_group)
-
-        super().save(*args, **kwargs)
 
 class Doctor(Person):
     experience = models.PositiveIntegerField() 
