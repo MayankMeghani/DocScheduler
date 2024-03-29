@@ -22,8 +22,12 @@
         {% endfor %}
     </ul>
   {% endif %}
-    <input type="hidden" name="doctor_username" id="doctor_username" value="{{ form.initial.doctor_username }}" placeholder="{{ form.initial.doctor_username }}" >
-    <input type="hidden" name="patient_username" id="patient_username" value="{{ form.initial.patient_username }}" placeholder="{{ form.initial.patient_username }}" >
+  <lable for="doctor_username">Doctor username:</lable><br>
+    <input type="text" name="doctor_username" id="doctor_username" value="{{ form.initial.doctor_username }}" placeholder="{{ form.initial.doctor_username }}" disabled>
+    <br><br>
+    <lable for="Patient_username">Patient username:</lable><br>
+    <input type="text" name="patient_username" id="patient_username" value="{{ form.initial.patient_username }}" placeholder="{{ form.initial.patient_username }}" disabled>
+    <br>
     {{ form.as_p }}
     
     <button type="submit">Submit</button>

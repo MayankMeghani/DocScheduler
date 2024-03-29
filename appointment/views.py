@@ -107,7 +107,10 @@ def past_appointment_list(request):
     )
     
     all_appointments = list(past_appointments) + list(today_appointments)
-    
+    for appointment in all_appointments:
+        patient_username = appointment.patient_username
+        patient = Patient.objects.get(username=patient_username)
+        appointment.patient = patient
     return render(request, 'appointment_record.html', {'appointments': all_appointments})
 
 def booked_appointment_list(request):
@@ -119,6 +122,11 @@ def booked_appointment_list(request):
     current_user = Patient.objects.get(username=current_username)
     
     appointments = Appointment.objects.filter(patient_username=current_user)
-    
+    for appointment in appointments:
+        # Fetch the corresponding doctor object based on the username
+        doctor_username = appointment.doctor_username
+        doctor = Doctor.objects.get(username=doctor_username)
+        # Assign the doctor object to a new attribute in the appointment
+        appointment.doctor = doctor
     return render(request, 'booked_appointment.html', {'appointments': appointments})
 

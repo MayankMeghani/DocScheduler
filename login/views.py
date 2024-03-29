@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from datetime import datetime
 from appointment.models import Appointment
 from django.contrib import messages
-
+from .models import Patient
 def register_doctor(request):
     if request.method == 'POST':
         form = DoctorCreationForm(request.POST, request.FILES)
@@ -91,6 +91,10 @@ def home_doctor(request):
         date=today,
         status="Confirmed"
     )
+    for appointment in appointments:
+        patient_username = appointment.patient_username
+        patient = Patient.objects.get(username=patient_username)
+        appointment.patient = patient
     return render(request, 'home_doctor.html', {'appointments': appointments})
 
 

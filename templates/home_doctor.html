@@ -33,9 +33,10 @@
               {% for appointment in appointments %}
               <div class="appointment-card">
                 <ul>
-                  <li><strong>Patient:</strong> {{ appointment.patient_username }}</li>
+                  <li><strong>Patient:</strong> {{ appointment.patient.name }}</li>
                   <li><strong>Time Slot:</strong> {{ appointment.time_slot }}</li>
                   <li><strong>Date:</strong> {{ appointment.date }} </li>
+                  <li><strong>Issue:</strong> {{ appointment.issue }} </li>
                 </ul>
               </div>
               {% empty %}

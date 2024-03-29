@@ -30,6 +30,7 @@
         <th>Patient</th>
         <th>Time Slot</th>
         <th>Date</th>
+        <th>Issue</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
@@ -40,6 +41,7 @@
             <td>{{ appointment.patient_username }}</td>
             <td>{{ appointment.time_slot }}</td>
             <td>{{ appointment.date }}</td>
+            <td>{{ appointment.issue }}</td>
             <td>
                 {{ appointment.get_status_display }}
             </td>
