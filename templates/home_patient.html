@@ -1,4 +1,21 @@
+{% load static %}
 {% include "navbar.html" %}
-{% if user.is_authenticated %}
-      <h2>Welcome, {{ user.name }}</h2>
+
+<style>
+    body {
+        background-image: url("{% static 'bg_patient.jpg' %}") ;
+        background-size: 1535px 740px;
+
+    }
+</style>
+<br>
+<h2>Welcome, {{ user.first_name}} {{user.last_name }}</h2>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
+
+{% include "footer.html" %}

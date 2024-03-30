@@ -23,13 +23,14 @@
 </head>
 <body>
 {% include "navbar.html" %}
-  <h3>Appointments for {{ user.name }}</h3>
+  <h3>Appointments for Dr.{{ user.first_name }} {{ user.last_name }}</h3>
   <table>
     <thead>
       <tr>
         <th>Patient</th>
         <th>Time Slot</th>
         <th>Date</th>
+        <th>Issue</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
@@ -37,9 +38,10 @@
     <tbody>
         {% for appointment in appointments %}
         <tr>
-            <td>{{ appointment.patient_username }}</td>
+            <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
             <td>{{ appointment.time_slot }}</td>
             <td>{{ appointment.date }}</td>
+            <td>{{ appointment.issue }}</td>
             <td>
                 {{ appointment.get_status_display }}
             </td>

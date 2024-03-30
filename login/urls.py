@@ -10,6 +10,7 @@ urlpatterns = [
     path('home_doctor/', views.home_doctor, name='home/doctor'),
     path('home_patient/', views.home_patient, name='home/patient'),
     path("logout/", views.logout_request, name="logout"),
-    path("profile/",views.user_profile,name="user_profile")
+    path("profile/",views.user_profile,name="patient_profile"),
+    path("home_doctor/profile",views.user_profile,name="doctor_profile")
 
 ]

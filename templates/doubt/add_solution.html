@@ -1,0 +1,26 @@
+<!-- update_solution.html -->
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'forms.css' %}">
+    <style>
+        form {
+            margin-top:8%;
+            max-width: 30%;
+        }
+        
+    </style>
+    <title>Solution</title>
+</head>
+<body>
+    <form method="post">
+        <h1> Solution</h1>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">SUBMIT</button>
+    </form>
+</body>
+</html>

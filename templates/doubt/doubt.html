@@ -1,0 +1,50 @@
+
+{% block content %}
+<div class="container">
+    <h1>Doubts</h1>
+    <div id="accordion">
+        {% for doubt in doubts %}
+        <div class="card">
+            <div class="card-header" id="heading{{ doubt.id }}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ doubt.id }}" aria-expanded="true" aria-controls="collapse{{ doubt.id }}">
+                        {{ doubt.subject }}
+                    </button>
+                </h5>
+            </div>
+            <div id="collapse{{ doubt.id }}" class="collapse" aria-labelledby="heading{{ doubt.id }}" data-parent="#accordion">
+                <div class="card-body">
+                    <p>{{ doubt.description }}</p>
+                    {% if doubt.solution %}
+                        <h5>Solution:</h5>
+                        <p>{{ doubt.solution.description }}</p>
+                    {% endif %}
+                    {% if doubt.solutions.count > 1 %}
+                        <button class="btn btn-primary view-solutions" data-toggle="collapse" data-target="#doubtSolutions{{ doubt.id }}">View More Solutions</button>
+                        <div id="doubtSolutions{{ doubt.id }}" class="collapse">
+                            <ul>
+                                {% for solution in doubt.solutions.all %}
+                                    <li>{{ solution.description }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        $('.view-solutions').click(function () {
+            $(this).text(function (i, text) {
+                return text === "View More Solutions" ? "Hide Solutions" : "View More Solutions";
+            });
+        });
+    });
+</script>
+{% endblock %}

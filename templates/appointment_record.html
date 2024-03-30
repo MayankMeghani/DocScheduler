@@ -31,15 +31,17 @@
                     <th>Patient Name</th>
                     <th>Date</th>
                     <th>Time Slot</th>
+                    <th>Issue</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 {% for appointment in appointments %}
                     <tr>
-                        <td>{{ appointment.patient_username }}</td>
+                        <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
                         <td>{{ appointment.date }}</td>
                         <td>{{ appointment.time_slot }}</td>
+                        <td>{{ appointment.issue }}</td>
                         <td>{{ appointment.status }}</td>
                     </tr>
                 {% empty %}

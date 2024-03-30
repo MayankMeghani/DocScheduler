@@ -4,10 +4,16 @@ from django.db import models
 from django.contrib.auth.models import Group
 class Person(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pictures/')
-    name =models.CharField(max_length=30)
+    # name =models.CharField(max_length=30)
     age = models.PositiveIntegerField() 
-    address = models.CharField(max_length=255)
     mobile_number = models.CharField(max_length=15)
+    address = models.CharField(max_length=255)
+    cities = [
+      ("Mumbai", "Mumbai"),("Delhi","Delhi"),( "Bangalore", "Bangalore"),("Hyderabad","Hyderabad"),
+      ("Ahmedabad","Ahmedabad"),("Chennai","Chennai"),("Kolkata","Kolkata"),("Surat","Surat"),
+      ("Pune","Pune"),("Jaipur","Jaipur"),("Nadiad","Nadiad")
+    ]
+    city =models.CharField(max_length=10, choices=cities )
     GENDERS = [
         ('M', 'Male'),
         ('F', 'Female'),
@@ -36,12 +42,7 @@ class Patient(Person):
     blood_group = models.CharField(max_length=3,choices=blood_group_choices)
     class Meta:
         db_table ='patient'
-    # def save(self, *args, **kwargs):
-    #     super(Patient, self).save(*args, **kwargs)  # Save the instance to the database first
-    #     if not self.pk:
-    #         # Set the group to "patient" for new Patient instances
-    #         group = Group.objects.get(name='patient')
-    #         self.groups.add(group)  
+    
 
 class Doctor(Person):
     experience = models.PositiveIntegerField() 

@@ -28,8 +28,20 @@ class Appointment(models.Model):
         ('Pending', 'Pending'),
     ]
     status = models.CharField(max_length=200, choices=STATUS_CHOICES, default='Pending')
+    issue = models.CharField(max_length=500)
+        
+    # def clean(self):
+    #     if Appointment.objects.filter(
+    #         doctor_username=self.doctor_username,
+    #         date=self.date,
+    #         time_slot=self.time_slot
+    #     ).count() >= 5:
+    #         raise ValidationError("The doctor cannot have more than 5 appointments for the same time slot on the same day.")
+
     class Meta:
         db_table = 'Appointment'
     
     def get_STATUS_CHOICES(self):
         return self.STATUS_CHOICES
+    
+    

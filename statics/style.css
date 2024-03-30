@@ -1,5 +1,8 @@
 body {
   font-family: Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
 }
 
 header {
@@ -19,19 +22,21 @@ section {
 }
 
 #doctor {
-  background-color: rgb(171, 222, 224);
+  background-color: antiquewhite;
   padding: 2%;
   flex: 1;
   /* Distribute space equally among sections */
   margin-left: 25%;
   margin-top: 5%;
   margin-right: 0.5%;
-
+  opacity: 0.9;
   height: 20rem;
   /* Add some margin between sections */
 }
+
 #pateint {
-  background-color: rgb(171, 222, 224);
+  background-color: antiquewhite;
+  opacity: 0.9;
   padding: 2%;
   flex: 1;
   /* Distribute space equally among sections */
@@ -41,6 +46,7 @@ section {
   height: 20rem;
   /* Add some margin between sections */
 }
+
 @media (max-width: 600px) {
   .maincon {
     flex-direction: column;
@@ -49,7 +55,7 @@ section {
 }
 
 footer {
-  background-color: #333;
+  background-color: rgba(51, 51, 51, 0.5);
   color: #fff;
   text-align: center;
   padding: 10px;
@@ -59,18 +65,21 @@ footer {
 }
 
 .city-dropdown {
-  margin-right: auto;
+  margin-top: -20px;
+  margin-right: 1%;
 }
 
 /* Extend the width of the container */
 .navbar .container {
-  max-width: 100%; /* Adjust the width as needed */
+  max-width: 100%;
+  /* Adjust the width as needed */
 }
 
 /* Dummy buttons */
 .navbar .dummy-buttons {
   margin-left: auto;
 }
+
 .maincon>section {
   background-color: rgb(171, 222, 224);
   padding: 2%;
@@ -124,13 +133,14 @@ footer {
 }
 
 .appointment-card {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.5);
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
-  width: 33%;
+  width: 25%;
   margin: 1%;
 }
+
 .appointment-card-container .appointment-card {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
@@ -139,15 +149,50 @@ footer {
   width: 33%;
   margin: 1%;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
 }
-th, td {
+
+th,
+td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
+
 th {
   background-color: #f2f2f2;
+}
+
+/* profile page css */
+
+.profile_container {
+  max-width: 30%;
+  margin: 5rem auto ;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h1 {
+  color: #007bff;
+}
+
+img {
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile_container>p {
+  margin: 10px 0;
+}
+
+strong {
+  font-weight: bold;
 }

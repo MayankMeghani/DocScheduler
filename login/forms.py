@@ -5,7 +5,7 @@ from .models import Person,Patient,Doctor
 class PersonCreationForm(UserCreationForm):
     class Meta:
         model = Person
-        fields = ('username','profile_picture', 'email','name', 'age', 'address', 'mobile_number','is_staff','gender', 'password1', 'password2')
+        fields = ('username','profile_picture', 'email','first_name','last_name', 'age', 'address','city', 'mobile_number','is_staff','gender', 'password1', 'password2')
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -14,9 +14,9 @@ class LoginForm(forms.Form):
 class PatientCreationForm(PersonCreationForm):
     class Meta:
         model = Patient
-        fields = ['username','profile_picture', 'email','name', 'age', 'address', 'mobile_number', 'gender', 'blood_group','password1','password2']
+        fields = ['username','profile_picture', 'email','first_name','last_name', 'age', 'address','city', 'mobile_number', 'gender', 'blood_group','password1','password2']
         
 class DoctorCreationForm(PersonCreationForm):
     class Meta:
         model = Doctor
-        fields = ['username','profile_picture', 'email', 'name', 'age','address', 'mobile_number', 'gender', 'experience', 'specialization','password1','password2']
+        fields = ['username','profile_picture', 'email','first_name','last_name', 'age','address','city', 'mobile_number', 'gender', 'experience', 'specialization','password1','password2']

@@ -5,41 +5,12 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="{% static 'style.css' %}"/>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 30%;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        h1 {
-            color: #007bff;
-        }
-        img {
-            display: block;
-            margin: auto;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        p {
-            margin: 10px 0;
-        }
-        strong {
-            font-weight: bold;
-        }
+        
     </style>
 </head>
 <body>
-    <div class="container">
+    {% include "navbar.html" %}
+    <div class="profile_container">
         <h1>User Profile</h1>
         {% if user.profile_picture %}
         <img src="{{ user.profile_picture.url }}" alt="Profile Picture" style="height: 200px; width: 200px;">
@@ -47,9 +18,10 @@
             <img src="{% static 'images/di.jpg' %}" alt="Default Profile Picture">
         {% endif %}
 
-        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>Name:</strong> {{ user.first_name }}  {{ user.last_name }}</p>
         <p><strong>Age:</strong> {{ user.age }}</p>
         <p><strong>Address:</strong> {{ user.address }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Mobile Number:</strong> {{ user.mobile_number }}</p>
         <p><strong>Gender:</strong> {{ user.get_gender_display }}</p>
     </div>

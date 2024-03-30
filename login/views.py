@@ -4,8 +4,9 @@ from .forms import PersonCreationForm, LoginForm,PatientCreationForm,DoctorCreat
 from django.core.exceptions import ValidationError
 from datetime import datetime
 from appointment.models import Appointment
+from django.contrib import messages
+from .models import Patient
 
-from django.contrib.auth.decorators import login_required
 def register_doctor(request):
     if request.method == 'POST':
         form = DoctorCreationForm(request.POST, request.FILES)
@@ -13,7 +14,9 @@ def register_doctor(request):
             age = form.cleaned_data['age']
             experience = form.cleaned_data['experience']
             if experience > age:
-                raise ValidationError("Experience cannot be greater than age.")
+                messages.error(request, "Experience cannot be greater than age.")
+                form = DoctorCreationForm()
+                return render(request, 'register_doctor.html', {'form': form})
             form.save()
             return redirect('/login')  
     else:
@@ -26,7 +29,12 @@ def register_patient(request):
         form = PatientCreationForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('/login')  
+            
+            messages.success(request, "Registration successful." )
+            return redirect('/login')
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+        form = PatientCreationForm()
+        return render(request, 'register_patient.html', {'form': form})
     else:
         form = PatientCreationForm()
     return render(request, 'register_patient.html', {'form': form})
@@ -55,17 +63,19 @@ def user_login(request):
                 request.session['is_staff'] = False
                 if(user.is_staff==True):
                     request.session['is_staff'] = True
-                    today = datetime.now().date()
-                    appointments = Appointment.objects.filter(
-                    doctor_username__username=user.username,
-                    date=today,
-                    status="Confirmed"
-                    )
-                    return render(request, 'home_doctor.html',{'appointments': appointments})
+                    # today = datetime.now().date()
+                    # appointments = Appointment.objects.filter(
+                    # doctor_username__username=user.username,
+                    # date=today,
+                    # status="Confirmed"
+                    # )
+                    # return render(request, 'home_doctor.html',{'appointments': appointments})
+                    return redirect('/home_doctor') 
+                
                 else:
                     return redirect('/home_patient') 
             else:
-                return render(request, 'login.html', {'form': form})
+                return render(request, 'login.html', {'form': form}, {'messages': messages.get_messages(request)})
     
     else:
         form = LoginForm()
@@ -75,27 +85,38 @@ def home(request):
     return render(request, 'home.html')
 
 def home_doctor(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as doctor first.')
+        return redirect('login')
     today = datetime.now().date()
     appointments = Appointment.objects.filter(
         doctor_username__username=request.session.get('username'),
         date=today,
         status="Confirmed"
     )
+    for appointment in appointments:
+        patient_username = appointment.patient_username
+        patient = Patient.objects.get(username=patient_username)
+        appointment.patient = patient
     return render(request, 'home_doctor.html', {'appointments': appointments})
-    # return redirect("home/doctor",**kwargs={'appointments': appointments})
+
 
 def home_patient(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as patient first.')
+        return redirect('login')
     return render(request, 'home_patient.html')
 
 def logout_request(request):
     logout(request)
     if 'username' in request.session:
-        del request.session['username']  # Clear username from session upon logout
+        del request.session['username'] 
     return redirect('/')
 
 
-@login_required
 def user_profile(request):
-    user = request.user
-    return render(request, 'user_profile.html', {'user': user})
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in first.')
+        return redirect('login')
+    return render(request, 'user_profile.html')
 

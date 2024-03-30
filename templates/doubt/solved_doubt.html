@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solved Doubts</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .action-button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .action-update {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .action-delete {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    {% include "navbar.html" %}
+    <h1>Solved Doubts</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Doubt</th>
+                <th>Solution</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sol in solutions %}
+            <tr>
+                <td>{{sol.doubt.patient_username.username}}</td>
+                <td>{{sol.doubt.description}}</td>
+                <td>{{sol.description}}</td>
+                <td>
+                    <button class="action-button action-update" onclick="updateSolution({{ sol.id }})">Update</button>
+                    <button class="action-button action-delete" onclick="deleteSolution({{ sol.id }})">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function updateSolution(id) {
+            // Redirect to update solution page with solution ID
+            window.location.href = `/update_solution/${id}`;
+        }
+
+        function deleteSolution(id) {
+            // Confirm deletion and redirect to delete solution view
+            if (confirm("Are you sure you want to delete this solution?")) {
+                window.location.href = `/delete_solution/${id}`;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,13 +1,36 @@
-<form method="post">
+{% load static%}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'forms.css' %}"/>
+        <style>
+            form {
+                margin-top:7%;
+                max-width: 30%;
+            }
+        </style>
+    </head>
+    <body>
+        
+<form method="post" action="processing_appointment">
+    <center><h1>Book Appointment</h1></center>
+
     {% csrf_token %}
-    <p>
-        <label for="id_doctor_username">Doctor Username:</label>
-        <input type="text" name="doctor_username" id="id_doctor_username" value="{{ form.initial.doctor_username }}" placeholder="{{ form.initial.doctor_username }}" disabled>
-    </p>
-    <p>
-        <label for="id_patient_username">Patient Username:</label>
-        <input type="text" name="patient_username" id="id_patient_username" value="{{ form.initial.patient_username }}" placeholder="{{ form.initial.patient_username }}" disabled>
-    </p>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+  <lable for="doctor_username">Doctor username:</lable><br>
+    <input type="text" name="doctor_username" id="doctor_username" value="{{ form.initial.doctor_username }}" placeholder="{{ form.initial.doctor_username }}" disabled>
+    <br><br>
+    <lable for="Patient_username">Patient username:</lable><br>
+    <input type="text" name="patient_username" id="patient_username" value="{{ form.initial.patient_username }}" placeholder="{{ form.initial.patient_username }}" disabled>
+    <br>
     {{ form.as_p }}
+    
     <button type="submit">Submit</button>
 </form>
+</body>
+</html>
