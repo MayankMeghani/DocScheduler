@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doubt List</title>
+    <style>
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .doubt-container {
+            position: relative; /* Added position relative for positioning the buttons */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .doubt-container:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .doubt-subject {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .doubt-status {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .doubt-container .action-buttons {
+            position: absolute; /* Position the buttons absolutely */
+            top: 15px; /* Adjust top position as needed */
+            right: 15px; /* Align to the right */
+        }
+
+        .doubt-container .action-buttons button {
+            margin-left: 10px; /* Add some spacing between buttons */
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .doubt-container .action-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        .doubt-container .action-buttons button:focus {
+            outline: none;
+        }
+
+        .doubt-container .action-buttons button a {
+            color: black; /* Change the font color of the link inside the button to black */
+        }
+
+        .create-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .create-link:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            color: #fff;
+        }    
+    </style>
+</head>
+
+<body>
+    {% include "navbar.html" %}
+
+    <div class="container">
+        {% if not user.is_staff %}
+        <a class="create-link" href="{% url 'doubt:doubt_create' %}">Create New Doubt</a>
+        <br>
+        {% endif %}
+        <h1>Doubt List</h1>
+        {% for doubt in doubts %}
+        <div class="doubt-container">
+            <div class="doubt-subject">Subject : {{ doubt.subject }}</div>
+            <div class="doubt-details">
+                Description : {{ doubt.description }}
+            </div>
+            <div class="doubt-status">Status: {{ doubt.status }}</div>
+            <div class="doubt-details">Patient: {{ doubt.patient_username.username }}</div>
+            <div class="action-buttons">
+                <button type="submit">
+                    <a href="{% url 'doubt:doubt_solution' doubt.id %}">View Solutions</a>
+                </button>
+                {% if user.is_staff %}
+                <button type="submit">
+                    <a href="{% url 'doubt:create_solution' doubt.id %}">Add Solutions</a>
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p>No doubts found.</p>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

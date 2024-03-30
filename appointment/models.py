@@ -28,7 +28,7 @@ class Appointment(models.Model):
         ('Pending', 'Pending'),
     ]
     status = models.CharField(max_length=200, choices=STATUS_CHOICES, default='Pending')
-    issue = models.CharField(max_length=200)
+    issue = models.CharField(max_length=500)
         
     # def clean(self):
     #     if Appointment.objects.filter(

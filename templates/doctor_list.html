@@ -33,9 +33,10 @@
             <div class="card card-horizontal">
                 <img src="{{ doctor.profile_picture.url }}" class="card-img-top" alt="Doctor Image">
                 <div class="card-body">
-                    <h5 class="card-title" id="name">{{ doctor.name }}</h5>
+                    <h5 class="card-title" id="name">{{ doctor.first_name }} {{ doctor.last_name }}</h5>
                     <p class="card-text">Age: {{ doctor.age }}</p>
                     <p class="card-text">Address: {{ doctor.address }}</p>
+                    <p class="card-text">City: {{ doctor.city }}</p>
                     <p class="card-text" id="experience">Experience: {{ doctor.experience }} years</p>
                     <p class="card-text" id="specialty">Specialty: {{ doctor.specialization }}</p>
                     <form method="post" action="book_appointment">

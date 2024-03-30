@@ -16,17 +16,7 @@
         {% csrf_token %}
         {% if not user.is_staff %}
         <div class="container">
-            <div class="city-dropdown">
-                <span id="currentCity" style="color: #fff;">Current City: <span id="cityName">Loading...</span></span>
-                <div class="dropdown" style="margin-left: 10px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="cityDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Change City
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="cityDropdown" id="cityDropdownMenu">
-                        <!-- City options will be dynamically added here -->
-                    </div>
-                </div>
-            </div>
+            
             <a class="navbar-brand" href="/home_patient" style="margin-left: 20px;">Home</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +30,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/home_patient/booked_appointment_list">Appointment record</a>                    
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href=" /doubt/list ">Doubts</a>                    
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href=" /home_patient/doubt ">Asked doubts</a>                    
+                    </li>
                 </ul>
+            </div>
+            <div class="city-dropdown">
+                <span id="currentCity" style="color: #fff;">Current City: <span id="cityName">{{user.city}}</span></span>
+                <div class="dropdown" style="margin-left: 10px;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="cityDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Change City
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="cityDropdown" id="cityDropdownMenu">
+                    </div>
+                </div>
             </div>
             <div class="dummy-buttons">
                 <a href="/logout">
@@ -68,6 +74,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/past_appointment_list">Appointment record</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href=" /doubt/list">Doubts</a>                    
+                    </li>    
+                    <li class="nav-item">
+                        <a class="nav-link" href=" /home_doctor/doubt">Solved Doubts</a>                    
                     </li>    
                 </ul>
             </div>
@@ -82,7 +94,6 @@
         </div>
         {% endif %}
     </nav>
-</div>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -92,8 +103,7 @@
     <script>
         // Simulated list of cities for demonstration purposes
         const cities = [
-            "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata", "Surat", "Pune", "Jaipur"
-            // Add more cities as needed
+            "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata", "Surat", "Pune", "Jaipur","Nadiad"
         ];
 
         // Populate the dropdowns with city options
@@ -106,7 +116,12 @@
             option.textContent = city;
             option.addEventListener("click", function () {
                 updateCity(city);
-            });
+            }); 
+            {% comment %} option.addEventListener("click", function () {
+                updateCity(city);
+                window.location.href = "/home_patient/doctor_list/?city=" + city;
+            }); {% endcomment %}
+            
             cityDropdownMenu.appendChild(option);
         });
 

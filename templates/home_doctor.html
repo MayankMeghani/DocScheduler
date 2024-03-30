@@ -26,14 +26,14 @@
 {% if user.is_authenticated %}
 
 <div class="welcome-container">
-  <h2>Welcome, Dr.{{ user.name }}</h2>
+  <h2>Welcome, Dr.{{ user.first_name }} {{user.last_name}}</h2>
 </div>
       <div class="container">
             <div class="row">
               {% for appointment in appointments %}
               <div class="appointment-card">
                 <ul>
-                  <li><strong>Patient:</strong> {{ appointment.patient.name }}</li>
+                  <li><strong>Patient:</strong> {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</li>
                   <li><strong>Time Slot:</strong> {{ appointment.time_slot }}</li>
                   <li><strong>Date:</strong> {{ appointment.date }} </li>
                   <li><strong>Issue:</strong> {{ appointment.issue }} </li>

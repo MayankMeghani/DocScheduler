@@ -38,7 +38,7 @@
             <tbody>
                 {% for appointment in appointments %}
                     <tr>
-                        <td>{{ appointment.patient.name }}</td>
+                        <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
                         <td>{{ appointment.date }}</td>
                         <td>{{ appointment.time_slot }}</td>
                         <td>{{ appointment.issue }}</td>

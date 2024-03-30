@@ -65,7 +65,8 @@ footer {
 }
 
 .city-dropdown {
-  margin-right: auto;
+  margin-top: -20px;
+  margin-right: 1%;
 }
 
 /* Extend the width of the container */

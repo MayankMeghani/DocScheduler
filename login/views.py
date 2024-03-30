@@ -6,6 +6,7 @@ from datetime import datetime
 from appointment.models import Appointment
 from django.contrib import messages
 from .models import Patient
+
 def register_doctor(request):
     if request.method == 'POST':
         form = DoctorCreationForm(request.POST, request.FILES)
@@ -62,13 +63,15 @@ def user_login(request):
                 request.session['is_staff'] = False
                 if(user.is_staff==True):
                     request.session['is_staff'] = True
-                    today = datetime.now().date()
-                    appointments = Appointment.objects.filter(
-                    doctor_username__username=user.username,
-                    date=today,
-                    status="Confirmed"
-                    )
-                    return render(request, 'home_doctor.html',{'appointments': appointments})
+                    # today = datetime.now().date()
+                    # appointments = Appointment.objects.filter(
+                    # doctor_username__username=user.username,
+                    # date=today,
+                    # status="Confirmed"
+                    # )
+                    # return render(request, 'home_doctor.html',{'appointments': appointments})
+                    return redirect('/home_doctor') 
+                
                 else:
                     return redirect('/home_patient') 
             else:

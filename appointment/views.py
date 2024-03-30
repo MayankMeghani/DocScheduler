@@ -9,6 +9,12 @@ def doctor_list(request):
     if not request.user.is_authenticated :
         messages.warning(request, 'You need to log in as patient first.')
         return redirect('login')
+    # selected_city = request.GET.get('city')
+    # if selected_city:
+    #     doctors = Doctor.objects.filter(city=selected_city)
+    # else:
+    #     doctors = Doctor.objects.all()
+    # return render(request, 'doctor_list.html', {'doctors': doctors})
     doctors = Doctor.objects.all()
     return render(request,'doctor_list.html',{'doctors': doctors})
 
@@ -73,6 +79,10 @@ def appointment_list(request):
     doctor_username = request.session.get('username')
     tomorrow = datetime.now().date()+timedelta(days=1)
     appointments = Appointment.objects.filter(doctor_username__username=doctor_username, date__gte=tomorrow)
+    for appointment in appointments:
+        patient_username = appointment.patient_username
+        patient = Patient.objects.get(username=patient_username)
+        appointment.patient = patient
     return render(request, 'appointment_list.html', {'appointments': appointments})
 
 
