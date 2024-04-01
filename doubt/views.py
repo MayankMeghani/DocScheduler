@@ -5,32 +5,44 @@ from .forms import DoubtForm,SolutionForm
 from login.models import Patient,Doctor
 
 def doubt_list(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log first. ')
+        return redirect('login')
     doubts = Doubt.objects.all()
     return render(request, 'doubt/doubt_list.html', {'doubts': doubts})
 
 def user_doubts(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as patient first.')
+        return redirect('login')
     current_username = request.session.get('username')    
     current_user = Patient.objects.get(username=current_username)
     user_doubts = Doubt.objects.filter(patient_username=current_user)
     return render(request, 'doubt/asked_doubt.html', {'doubts': user_doubts})
 
 def solved_doubts(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as doctor first.')
+        return redirect('login')
     doctor_username = request.session.get('username')
     doctor = Doctor.objects.get(username=doctor_username)
     solutions = Solution.objects.filter(doctor=doctor)
-    # # solved_doubts = Doubt.objects.filter(doubt=doubt)
-    # doubt_ids = [solution.doubt_id for solution in solutions]
-    # solved_doubts = Doubt.objects.filter(id__in=doubt_ids)
     return render(request, 'doubt/solved_doubt.html',{'solutions':solutions})
-    # return render(request, 'doubt/doubt_list.html',{'solutions':solutions})
+
 
 
 def doubt_solution(request, doubt_id):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in first.')
+        return redirect('login')
     doubt = get_object_or_404(Doubt, pk=doubt_id)
     solutions = Solution.objects.filter(doubt=doubt)
     return render(request, 'doubt/doubt_solution.html', {'doubt': doubt, 'solutions': solutions})
 
 def doubt_create(request):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as patient first.')
+        return redirect('login')
     if request.method == 'GET':
         patient_username = request.session.get('username')
         initial_data = {
@@ -48,8 +60,11 @@ def doubt_create(request):
     return render(request, 'doubt/doubt_create.html', {'form': form})
 
 def create_solution(request, doubt_id):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as doctor first.')
+        return redirect('login')
     doubt = get_object_or_404(Doubt, pk=doubt_id)
-    if not request.user.is_staff:  # Assuming is_staff is True for doctors
+    if not request.user.is_staff:  
         messages.error(request, "Patients cannot add solutions.")
         return redirect('/doubt/list')
     if request.method == 'POST':
@@ -69,18 +84,24 @@ def create_solution(request, doubt_id):
     return render(request, 'doubt/add_solution.html', {'form': form, 'doubt': doubt})
 
 def update_solution(request, solution_id):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as doctor first.')
+        return redirect('login')
     solution = get_object_or_404(Solution, pk=solution_id)
     if request.method == 'POST':
         form = SolutionForm(request.POST, instance=solution)
         if form.is_valid():
             form.save()
-            return redirect('/home_doctor/doubt')  # Redirect to solved doubts page after update
+            return redirect('/home_doctor/doubt') 
     else:
         form = SolutionForm(instance=solution)
     return render(request, 'doubt/add_solution.html', {'form': form, 'solution': solution})
 
 
 def delete_solution(request, solution_id):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as doctor first.')
+        return redirect('login')
     solution = get_object_or_404(Solution, pk=solution_id)
 
     other_solutions_count = Solution.objects.filter(doubt=solution.doubt).exclude(id=solution_id).count()
@@ -93,6 +114,9 @@ def delete_solution(request, solution_id):
     return redirect('/home_doctor/doubt')
 
 def update_doubt(request, doubt_id):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as patient first.')
+        return redirect('login')
     doubt = get_object_or_404(Doubt, pk=doubt_id)
     if request.method == 'POST':
         form = DoubtForm(request.POST, instance=doubt)
@@ -107,6 +131,9 @@ def update_doubt(request, doubt_id):
 
 
 def delete_doubt(request, doubt_id):
+    if not request.user.is_authenticated :
+        messages.warning(request, 'You need to log in as patient first.')
+        return redirect('login')
     doubt = get_object_or_404(Doubt, pk=doubt_id)
     doubt.delete()
     return redirect('/home_patient/doubt')

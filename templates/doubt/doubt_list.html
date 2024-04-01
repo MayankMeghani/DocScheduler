@@ -88,13 +88,16 @@
     {% include "navbar.html" %}
 
     <div class="container">
+    
         {% if not user.is_staff %}
         <a class="create-link" href="{% url 'doubt:doubt_create' %}">Create New Doubt</a>
         <br>
         {% endif %}
+
         <h1>Doubt List</h1>
+        <input type="text" class="form-control" id="search-bar" placeholder="Search by Subject of doubt">
         {% for doubt in doubts %}
-        <div class="doubt-container">
+        <div class="doubt-container" id="doubt{{ doubt.id }}">
             <div class="doubt-subject">Subject : {{ doubt.subject }}</div>
             <div class="doubt-details">
                 Description : {{ doubt.description }}
@@ -116,6 +119,24 @@
         <p>No doubts found.</p>
         {% endfor %}
     </div>
+
+    <script>
+        var searchBar = document.getElementById('search-bar');
+        var doubtContainers = document.querySelectorAll('.doubt-container');
+
+        searchBar.addEventListener('input', function () {
+            var query = searchBar.value.toLowerCase();
+
+            doubtContainers.forEach(function (container) {
+                var subject = container.querySelector('.doubt-subject').innerText.toLowerCase();
+                if (subject.includes(query)) {
+                    container.style.display = 'block';
+                } else {
+                    container.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

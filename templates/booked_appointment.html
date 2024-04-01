@@ -28,6 +28,7 @@
             <thead>
                 <tr>
                     <th>Doctor</th>
+                    <th>Contact details</th>
                     <th>Date</th>
                     <th>Time Slot</th>
                     <th>Issue</th>
@@ -38,7 +39,13 @@
                 {% for appointment in appointments %}
                     <tr>
                         <td>{{ appointment.doctor.first_name}} {{ appointment.doctor.last_name  }}</td>
-                        <td>{{ appointment.date }}</td>
+                        <td>
+                            <ul>
+                            <li>{{ appointment.doctor.mobile_number}}</li>
+                            <li>{{ appointment.doctor.email}}</li>
+                            </ul>
+                        </td>
+                            <td>{{ appointment.date }}</td>
                         <td>{{ appointment.time_slot }}</td>
                         <td>{{ appointment.issue }}</td>
                         <td>{{ appointment.status }}</td>
@@ -49,5 +56,6 @@
     {% else %}
         <p>No appointments booked.</p>
     {% endif %}
+ 
 </body>
 </html>
