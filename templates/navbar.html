@@ -99,16 +99,16 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    
     <script>
+        
         // Simulated list of cities for demonstration purposes
         const cities = [
-            "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata", "Surat", "Pune", "Jaipur","Nadiad"
+            "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata", "Surat", "Pune", "Jaipur", "Nadiad"
         ];
-
+    
         // Populate the dropdowns with city options
         const cityDropdownMenu = document.getElementById("cityDropdownMenu");
-
+    
         cities.forEach(city => {
             const option = document.createElement("a");
             option.classList.add("dropdown-item");
@@ -116,18 +116,13 @@
             option.textContent = city;
             option.addEventListener("click", function () {
                 updateCity(city);
-            }); 
-            {% comment %} option.addEventListener("click", function () {
-                updateCity(city);
-                window.location.href = "/home_patient/doctor_list/?city=" + city;
-            }); {% endcomment %}
-            
+            });
+    
             cityDropdownMenu.appendChild(option);
         });
-
+    
         function updateCity(newCity) {
             document.getElementById("cityName").textContent = newCity;
-            // Additional logic to handle city update goes here
         }
     </script>
 </body>

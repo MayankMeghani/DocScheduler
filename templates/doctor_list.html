@@ -15,13 +15,14 @@
 <body>
     {% include "navbar.html" %}
     <div class="container">
-        <input type="text" class="form-control" id="search-bar" placeholder="Search by name or specialty">
+        <input type="text" class="form-control" id="search-bar" placeholder="Search by name or city or specialty">
 
 
         <!-- Sort dropdown -->
         <div class="form-group">
             <label for="sort-dropdown">Sort By:</label>
             <select class="form-control" id="sort-dropdown">
+                <option >---</option>
                 <option value="name">Name</option>
                 <option value="experience">Experience</option>
                 <!-- Add more sorting options as needed -->
@@ -36,7 +37,7 @@
                     <h5 class="card-title" id="name">{{ doctor.first_name }} {{ doctor.last_name }}</h5>
                     <p class="card-text">Age: {{ doctor.age }}</p>
                     <p class="card-text">Address: {{ doctor.address }}</p>
-                    <p class="card-text">City: {{ doctor.city }}</p>
+                    <p class="card-text" id="city">City: {{ doctor.city }}</p>
                     <p class="card-text" id="experience">Experience: {{ doctor.experience }} years</p>
                     <p class="card-text" id="specialty">Specialty: {{ doctor.specialization }}</p>
                     <form method="post" action="book_appointment">
@@ -71,8 +72,9 @@
             cards.forEach(function (card) {
                 var doctorName = card.querySelector('.card-title').textContent.toLowerCase();
                 var specialty = card.querySelector('#specialty').textContent.toLowerCase();
-                if (doctorName.includes(searchText) || specialty.includes(searchText)) {
-                    card.style.display = 'block';
+                var city = card.querySelector('#city').textContent.toLowerCase();
+                if (doctorName.includes(searchText) || specialty.includes(searchText) || city.includes(searchText)) {
+                    card.style.display = 'inline-block';
                 } else {
                     card.style.display = 'none';
                 }
@@ -80,26 +82,31 @@
         });
 
 
-        // Function to sort doctors based on the selected option in the dropdown
         document.getElementById('sort-dropdown').addEventListener('change', function () {
             var sortBy = this.value;
-            console.log(sortBy);
             var doctorList = document.getElementById('doctor-list');
-            console.log(doctorList)
             var doctors = Array.from(doctorList.children);
-            console.log(doctors)
-
-
-
+            
 
             doctors.sort(function (a, b) {
-                var aValue = a.querySelector('#' + sortBy).textContent.trim();
-                var bValue = b.querySelector('#' + sortBy).textContent.trim();
-
-
-                return aValue.localeCompare(bValue);
+                if(sortBy==="name"){
+                    var aValue = a.querySelector('#' + sortBy).textContent.trim();
+                    var bValue = b.querySelector('#' + sortBy).textContent.trim();
+                
+                    return aValue.localeCompare(bValue);
+                }
+                else if (sortBy === "experience") {
+                    var aExperience = a.querySelector('#' + sortBy).textContent.trim();
+                    var bExperience = b.querySelector('#' + sortBy).textContent.trim();
+                    
+                    console.log(aExperience,bExperience)
+                    // Remove non-numeric characters and parse as integer
+                    var aValue = parseInt(aExperience.replace(/\D/g, ''), 10);
+                    var bValue = parseInt(bExperience.replace(/\D/g, ''), 10);
+            
+                    return bValue - aValue;
+               }
             });
-            console.log(doctors)
             doctors.forEach(function (doctor) {
                 doctorList.appendChild(doctor);
             });
@@ -111,7 +118,10 @@
             var sortingElement = card.querySelector('.' + sortBy);
             return sortingElement ? sortingElement.textContent.trim().toLowerCase() : '';
         }
+
+        
     </script>
+
 </body>
 
 

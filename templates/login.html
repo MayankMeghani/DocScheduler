@@ -1,11 +1,13 @@
 {% load static %}
+
 <html>
   <head>
     <link rel="stylesheet" href="{% static 'forms.css' %}"/>
     <style>
       form {
           margin-top:10%;
-          max-width: 30%;
+          max-width: 25%;
+          max-height: 50%;
           box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 
       }
@@ -25,6 +27,7 @@
       </ul>
     {% endif %}
     {{ form.as_p }}
+    <br>
     <div style="text-align: center;">
       <button type="submit" style= "background-color: green">Login</button>
       <a href="/" style="display: inline-block; margin-left: 10px;">
@@ -32,7 +35,11 @@
       </a>
   </div>
   </form>
-
 {% endblock %}
+<script type = "text/javascript" >
+  function preventBack(){window.history.forward();}
+  setTimeout("preventBack()", 0);
+  window.onunload=function(){null};
+</script>
 </body>
 </html>

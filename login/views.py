@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from datetime import datetime
 from appointment.models import Appointment
 from django.contrib import messages
-from .models import Patient
+from .models import Patient,Person
 
 def register_doctor(request):
     if request.method == 'POST':
@@ -49,6 +49,7 @@ def register(request):
     else:
         form = PersonCreationForm()
     return render(request, 'register.html', {'form': form})
+from django.contrib import messages
 
 def user_login(request):
     if request.method == 'POST':
@@ -60,23 +61,18 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 request.session['username'] = user.username
-                request.session['is_staff'] = False
-                if(user.is_staff==True):
-                    request.session['is_staff'] = True
-                    # today = datetime.now().date()
-                    # appointments = Appointment.objects.filter(
-                    # doctor_username__username=user.username,
-                    # date=today,
-                    # status="Confirmed"
-                    # )
-                    # return render(request, 'home_doctor.html',{'appointments': appointments})
-                    return redirect('/home_doctor') 
-                
+                request.session['is_staff'] = user.is_staff
+                if user.is_staff:
+                    return redirect('/home_doctor')
                 else:
-                    return redirect('/home_patient') 
-            else:
-                return render(request, 'login.html', {'form': form}, {'messages': messages.get_messages(request)})
-    
+                    return redirect('/home_patient')
+            else: 
+                if Person.objects.filter(username=username).exists():
+                    messages.error(request, 'Incorrect password')
+                else:
+                    messages.error(request, 'Username does not exist')
+        else:
+            messages.error(request, 'Invalid form submission')
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
@@ -107,10 +103,12 @@ def home_patient(request):
         return redirect('login')
     return render(request, 'home_patient.html')
 
+
 def logout_request(request):
     logout(request)
     if 'username' in request.session:
         del request.session['username'] 
+    request.user = None    
     return redirect('/')
 
 
