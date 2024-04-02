@@ -15,7 +15,7 @@ def register_doctor(request):
             experience = form.cleaned_data['experience']
             if experience > age:
                 messages.error(request, "Experience cannot be greater than age.")
-                form = DoctorCreationForm()
+                
                 return render(request, 'register_doctor.html', {'form': form})
             form.save()
             return redirect('/login')  

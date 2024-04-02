@@ -16,10 +16,12 @@ class Appointment(models.Model):
         ('evening' ,'evening'),
     ]
     time_slot = models.CharField(max_length=20,choices=TIME_SLOTS)
-
-    past_7_days = [today - datetime.timedelta(days=i+1) for i in range(7)]
+    
+    # past_7_days = [today - datetime.timedelta(days=i+1) for i in range(7)]
     next_7_days = [today + datetime.timedelta(days=i+1) for i in range(7)]
-    DATE_CHOICES = tuple([(today, today.strftime('%d-%m-%Y'))] + [(d, d.strftime('%d-%m-%Y')) for d in past_7_days + next_7_days])
+    # DATE_CHOICES = tuple([(today, today.strftime('%d-%m-%Y'))] + [(d, d.strftime('%d-%m-%Y')) for d in past_7_days + next_7_days])
+    
+    DATE_CHOICES =tuple([(d, d.strftime('%d-%m-%Y')) for d in next_7_days])
     date = models.DateField(max_length=20, choices=DATE_CHOICES)
 
     STATUS_CHOICES = [
@@ -30,14 +32,6 @@ class Appointment(models.Model):
     status = models.CharField(max_length=200, choices=STATUS_CHOICES, default='Pending')
     issue = models.CharField(max_length=500)
         
-    # def clean(self):
-    #     if Appointment.objects.filter(
-    #         doctor_username=self.doctor_username,
-    #         date=self.date,
-    #         time_slot=self.time_slot
-    #     ).count() >= 5:
-    #         raise ValidationError("The doctor cannot have more than 5 appointments for the same time slot on the same day.")
-
     class Meta:
         db_table = 'Appointment'
     

@@ -63,7 +63,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
-        // Function to filter doctors based on search input
+
         document.getElementById('search-bar').addEventListener('input', function () {
             var searchText = this.value.toLowerCase();
             var cards = document.querySelectorAll('#doctor-list .card');
@@ -113,7 +113,6 @@
         });
 
 
-        // Function to get the sorting value from a card element based on the selected sorting option
         function getSortingValue(card, sortBy) {
             var sortingElement = card.querySelector('.' + sortBy);
             return sortingElement ? sortingElement.textContent.trim().toLowerCase() : '';

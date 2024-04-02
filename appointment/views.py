@@ -34,11 +34,13 @@ def book_appointment(request):
         return render (request, 'book_appointment.html', {'form': form})
 
 
+from django.db.models import Count
 
 def processing_appointment(request):    
-    if not request.user.is_authenticated :
-        messages.warning(request, 'You need to log in as patient first.')
+    if not request.user.is_authenticated:
+        messages.warning(request, 'You need to log in as a patient first.')
         return redirect('login')
+    
     form = AppointmentForm(request.POST)
     if form.is_valid():
         appointment = form.save(commit=False)
@@ -46,31 +48,42 @@ def processing_appointment(request):
         patient_username = form.cleaned_data['patient_username']  
         time_slot = form.cleaned_data['time_slot']
         date = form.cleaned_data['date']
-        # Check if a similar appointment already exists
+        
         existing_appointment = Appointment.objects.filter(
             doctor_username__username=doctor_username,
             patient_username__username=patient_username,
             time_slot=time_slot,
             date=date,
-            ).exists()
+        ).exists()
 
         if existing_appointment:
             messages.warning(request, 'This appointment already exists.')
             request.session["doctor_username"] = doctor_username.username
             return redirect(book_appointment)
-        
-        # No existing appointment found, save the new appointment
+
+        appointments_count = Appointment.objects.filter(
+            doctor_username__username=doctor_username,
+            time_slot=time_slot,
+            date=date,
+        ).count()
+
+        if appointments_count >= 5:
+            messages.warning(request, 'This slot is fully booked. Please choose another slot.')
+            request.session["doctor_username"] = doctor_username.username
+            return redirect(book_appointment)
 
         appointment.patient_username = Patient.objects.get(username=patient_username)
         appointment.doctor_username = Doctor.objects.get(username=doctor_username)
         appointment.save()
-        messages.warning(request, 'Appintment is succesfully booked.')
+
+        messages.warning(request, 'Appointment is successfully booked.')
         return redirect('/home_patient')
     else:
         doctor_username = form.cleaned_data['doctor_username']
         request.session["doctor_username"] = doctor_username.username
-        messages.warning(request, 'This Slot in not available for appoinment.')
+        messages.warning(request, 'Submitted from is not valid.')
         return redirect('book_appointment') 
+
 
 def appointment_list(request):
     if not request.user.is_authenticated :
