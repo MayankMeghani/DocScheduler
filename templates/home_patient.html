@@ -1,6 +1,7 @@
 {% load static %}
-{% include "navbar.html" %}
-
+<head>
+<title>Patient Dashboard</title>
+<link rel="icon" type="image/x-icon" href="{% static 'favicon.png' %}">
 <style>
     body {
         background-image: url("{% static 'bg_patient.jpg' %}") ;
@@ -8,6 +9,8 @@
 
     }
 </style>
+</head>
+{% include "navbar.html" %}
 <br>
 <h2>Welcome, {{ user.first_name}} {{user.last_name }}</h2>
 {% if messages %}

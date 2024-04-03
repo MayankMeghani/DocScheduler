@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solved Doubts</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.png' %}">
     <style>
         table {
             width: 100%;
@@ -70,12 +72,10 @@
 
     <script>
         function updateSolution(id) {
-            // Redirect to update solution page with solution ID
             window.location.href = `/update_solution/${id}`;
         }
 
         function deleteSolution(id) {
-            // Confirm deletion and redirect to delete solution view
             if (confirm("Are you sure you want to delete this solution?")) {
                 window.location.href = `/delete_solution/${id}`;
             }

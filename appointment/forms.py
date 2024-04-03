@@ -9,7 +9,3 @@ class AppointmentForm(forms.ModelForm):
             'doctor_username': forms.HiddenInput(),
             'patient_username': forms.HiddenInput()
         }
-    # def __init__(self, *args, **kwargs):
-    #     super(AppointmentForm, self).__init__(*args, **kwargs)
-    #     self.fields['doctor_username'].disabled = True
-    #     self.fields['patient_username'].disabled = True

@@ -1,6 +1,5 @@
 from django.db import models
 from login.models import Patient, Doctor
-# Create your models here.
 
 class Doubt(models.Model):
     patient_username = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -10,7 +9,7 @@ class Doubt(models.Model):
         ('solved', 'solved'),
         ('unsolved', 'unsolved'),
     ]
-    status = models.CharField(max_length=200, choices=STATUS_CHOICES, default='unsolved')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='unsolved')
     class Meta:
         db_table = 'Doubt'
     

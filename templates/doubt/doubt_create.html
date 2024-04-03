@@ -6,7 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Doubt</title>
+    <title>Ask Doubt</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.png' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'forms.css' %}">
     <style>
         form {
@@ -20,7 +21,8 @@
 <body>
     <div class="container">
         <form method="post">
-            <h2>Create Doubt</h2>
+            <h2>Ask Doubt</h2>
+
             {% csrf_token %}
             <p>
             {% if form.initial.patient_username %}

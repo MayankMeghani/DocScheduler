@@ -4,6 +4,7 @@ from login.models import Doctor,Patient
 from .forms import AppointmentForm
 from datetime import datetime,timedelta
 from django.contrib import messages
+from django.db.models import Count
 
 def doctor_list(request):
     if not request.user.is_authenticated :
@@ -33,8 +34,6 @@ def book_appointment(request):
         form = AppointmentForm(initial=initial_data)
         return render (request, 'book_appointment.html', {'form': form})
 
-
-from django.db.models import Count
 
 def processing_appointment(request):    
     if not request.user.is_authenticated:

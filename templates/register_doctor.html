@@ -4,7 +4,20 @@
 <html>
 <head>
     <title>Register</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.png' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'forms.css' %}">
+    <style>
+        .messages {
+            background-color: #FFA500; /* Orange background color */
+            color: #000000; /* Black text color for contrast */
+            list-style-type: none;
+            padding: 10px;
+            margin: 0;
+            animation: fadeOut 4s forwards; /* Animation duration for the warning */
+            border-radius:5px;
+          }
+          
+    </style>
 </head>
 <body>
 
@@ -28,6 +41,10 @@
   </div>
   </form>
 {% endblock %}
-
+<script type = "text/javascript" >
+    function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+  </script>
 </body>
 </html>

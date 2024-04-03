@@ -18,7 +18,10 @@ def register_doctor(request):
                 
                 return render(request, 'register_doctor.html', {'form': form})
             form.save()
-            return redirect('/login')  
+            return redirect('/login')
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+        form = PatientCreationForm()
+        return render(request, 'register_doctor.html', {'form': form})  
     else:
         form = DoctorCreationForm()
     return render(request, 'register_doctor.html', {'form': form})

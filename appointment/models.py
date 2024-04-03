@@ -29,8 +29,8 @@ class Appointment(models.Model):
         ('Confirmed', 'Confirmed'),
         ('Pending', 'Pending'),
     ]
-    status = models.CharField(max_length=200, choices=STATUS_CHOICES, default='Pending')
-    issue = models.CharField(max_length=500)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+    issue =  models.TextField()
         
     class Meta:
         db_table = 'Appointment'
